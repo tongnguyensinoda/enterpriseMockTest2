@@ -18,6 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> search(String keyword);
     @Query("SELECT p FROM Product p where p.country =?1")
     Product findProductByCountry(Country country);
-    @Query("SELECT p FROM Product p where p.productName = ?1")
-    Page<Product> findByNameLike(String productName, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE lower(CONCAT(p.productName, ' ', p.brand, ' ', p.color, ' ', p.price, ' ',p.model)) LIKE %?1%")
+    Page<Product> findByNameLike(String keyword, Pageable pageable);
 }
